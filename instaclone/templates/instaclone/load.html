@@ -1,0 +1,27 @@
+
+{% load bootstrap5 %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Upload </title>
+</head>
+<body>
+    {% load cloudinary %}
+    <h3>upload image</h3>
+    <form method="post" enctype="multiple/form-data">
+
+        {% csrf_token %}
+
+        {{ form.image }}
+        <div>
+            <br>
+            <input type="submit" value="upload image">
+        </div>
+    </form>
+    
+</body>
+</html>
