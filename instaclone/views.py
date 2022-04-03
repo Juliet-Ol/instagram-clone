@@ -2,8 +2,9 @@ from django.shortcuts import redirect, render
 from django.http import HttpResponse
 from .models import Image
 from .forms import ImageForm
+from django.contrib import messages
 from django.contrib.auth.forms import UserCreationForm
-
+import datetime as dt
 
 # def welcome(request):
 #     return HttpResponse('This is an instagram clone')
@@ -26,19 +27,25 @@ def loadImage(request):
     ctx = {'form':form}
     return render(request, 'instaclone/load.html')
 
+# User registration 
+
 
 def register(request):
-    form = UserCreationForm(request.POST or None)
-    # if request.method == 'POST':
-    #     form = UserCreationForm(request.POST)
-    #     if form.is_valid():
-    #         form.save()
-    #         return redirect ('instaclone/index.html')
-    #     else:
-    #         return render(request, 'registration/registration_form.html', {'form': form})
+    form = UserCreationForm
+
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'User has been registered')
+
+            # return redirect (request, 'registration/registration_form.html', {'form': form})
+        # else:
+        #     return render(request, 'registration/registration_form.html', {'form': form})
 
     # else:
     return render(request, 'registration/registration_form.html', {'form': form})
+
 
 
 
