@@ -15,7 +15,7 @@ class Profile(models.Model):
     avatar = models.ImageField(upload_to='image', null=True)
     author = models.ForeignKey(User, on_delete = models.CASCADE)
     name =models.CharField(max_length=50, blank=True)
-    bio = models.TextField
+    bio = models.TextField(null=True)
 
 
     def __str__(self):
