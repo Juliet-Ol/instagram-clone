@@ -54,7 +54,7 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
+    # 'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
@@ -151,3 +151,6 @@ cloudinary.config(
   api_key = "471245994175868", 
   api_secret = "CAS-yrgWOfJHRN1IYD58181C8Sw", 
 )
+
+LOGIN_REDIRECT_URL='index'
+LOGOUT_REDIRECT_URL='login'
