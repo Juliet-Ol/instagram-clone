@@ -1,18 +1,25 @@
 # import profile
 # from tkinter import image_names
-from django.db import models
-from django.contrib.auth.models import User
+import datetime as dt
+# from email.mime import image
+
 from cloudinary.models import CloudinaryField
+from django.contrib.auth.models import User
+from django.db import models
+from django.utils import timezone
+
+# from instaclone.forms import PostForm
+
 
 class Profile(models.Model):
-    profile_picture = CloudinaryField('image')
-    user =models.CharField(max_length=30)
+    avatar = models.ImageField(upload_to='image', null=True)
+    author = models.ForeignKey(User, on_delete = models.CASCADE)
     name =models.CharField(max_length=50, blank=True)
-    bio = models
+    bio = models.TextField
 
 
     def __str__(self):
-        return self.user.username
+        return self.user
 
 
 class Image(models.Model):
@@ -27,17 +34,51 @@ class Image(models.Model):
     class Meta:
         ordering =['-likes']
 
+# class Post (models.Model):
+#     name = models.CharField(max_length=30)
+
+#     def __str__(self):
+#         return self.name          
+
 class Comment(models.Model):  
     comment = models.TextField()
     # post = models.ForeignKey(Post,on_delete=models.CASCADE, related_name='comments')
+    
     created_on = models.DateTimeField(auto_now_add=True)
     user = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='comments')
 
     def __str__(self):
-        return f'{self.user.name} Post'
+        return f'{self.user} Post'
 
     class Meta:
         ordering = ['-created_on']    
+
+class Author(models.Model):
+    name = models.CharField(max_length=30)
+
+    def __str__(self):
+        return self.name  
+
+class Title(models.Model):
+    name = models.CharField(max_length=30)
+
+    def __str__(self):
+        return self.name  
+
+
+
+
+
+
+class Post (models.Model):
+    title = models.CharField(max_length=20)
+    post = models.CharField(max_length=100)
+    author = models.ForeignKey(User, on_delete = models.CASCADE)
+    published_date = models.DateTimeField(auto_now_add=True)
+    image = models.ImageField( blank=True, upload_to='images')
+
+    class Meta:
+        ordering = ['-published_date']        
 
 
 
