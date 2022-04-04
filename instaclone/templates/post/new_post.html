@@ -5,7 +5,9 @@
   <div class="row">
    
 
-    <div class="col-md-4"></div>
+    <div class="col-md-4">
+      
+    </div>
     <div class="col-md-4">
       <!-- {% if form.errors %}
         <p> Information Might be Incorrect </p>
@@ -23,7 +25,7 @@
         </div>
         <div class="panel-body">
 
-          <form  method="post" action="/post " >
+          <form  method="post" action="/post" enctype="multipart/form-data" >
             {% csrf_token %}
             {{form.as_p}}
             <!-- {% bootstrap_form form %} -->
@@ -36,15 +38,6 @@
           </form>
 
         </div>
-        <div> 
-            
-          <p class="card-text"> Title: {{post.title }}  </p>
-          <p class="card-text"> Post: {{post.post }}  </p>
-          <p class="card-text"> Post: {{post.author }} </p> 
-          
-
-          <p class="card-text"><small class="text-muted">Posted on: {{post.published_date}} </small></p>   
-        </div>
 
       </div>
 
@@ -54,7 +47,3 @@
   </div>
 </div>
 {% endblock %}
-
-    author = models.ForeignKey(User, on_delete = models.CASCADE)
-    published_date = models.DateTimeField(auto_now_add=True)
-    image  
