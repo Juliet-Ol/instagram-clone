@@ -13,7 +13,8 @@ def index(request):
     image = Image.objects.all() 
     ctx = {'image':image}
     posts = Post.display()
-    return render(request,'instaclone/index.html', {"posts":posts, "ctx":ctx})
+    comment_form = CommentForm
+    return render(request,'instaclone/index.html', {'comment_form': comment_form, "posts":posts, "ctx":ctx})
 
 def loadImage(request):
     if request.method == "POST":
@@ -64,12 +65,12 @@ def profile(request):
         # profile=Profile.objects.get(author= request.user.id)
        
         if form.is_valid():
-            profile.avatar=form.cleaned_data['avatar']   
-            profile.name=form.cleaned_data['name']  
-            profile.bio=form.cleaned_data['bio'] 
-            profile.author=request.user            
-            
-            profile.save()
+            # avatar=form.cleaned_data['avatar']   
+            # name=form.cleaned_data['name']  
+            # bio=form.cleaned_data['bio'] 
+            # author=request.user            
+            # profile=Profile(avatar,name,bio,au)
+            form.save()
 
             profile=Profile.objects.get(author= request.user.id)
             messages.success(request, 'Profile has been updated')
@@ -93,29 +94,21 @@ def editComment(request):
 
 
 def comment(request):
-    form = CommentForm
-
     if request.method == 'POST':
-        form = CommentForm(request.POST, request.FILES)
-       
-        
-        comment=Comment.objects.get(author= request.user.id)
+        form = CommentForm(request.POST)
        
         if form.is_valid():
-            comment = CommentForm.save(commit=False)
+            comment = Comment()
+            comment.post = Post.objects.get(id=request.POST['post_id'])
+            comment.author = request.user
+            comment.comment = form.cleaned_data['comment']
                      
-            
-            profile.save()
+            comment.save()
             messages.success(request, 'Comment has been added')
 
-            return redirect ('/comment')
+            return redirect ('index')
         else:
-            return render(request, 'post/comment.html', {'form': form})
-
-    else:
-        comment=Comment.objects.get(author= request.user.id)
-
-        return render(request, 'profile/show.html', {'form': form, 'comment':comment})     
+            return redirect ('index')
 
 
 
@@ -123,10 +116,16 @@ def post(request):
     form = PostForm
     current_user = request.user
     if request.method == 'POST':
+        print(request.POST['post'])
         form = PostForm(request.POST, request.FILES)
         
         if form.is_valid():
-            form.save()
+            post = Post()
+            post.title = form.cleaned_data['title']
+            post.post = form.cleaned_data['post']
+            post.author = current_user
+            post.picture = form.cleaned_data['picture']
+            post.save()
             messages.success(request, 'Posted')
 
             return redirect ('index')
