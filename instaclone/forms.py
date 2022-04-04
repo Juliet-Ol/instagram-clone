@@ -11,13 +11,25 @@ class ImageForm(forms.ModelForm):
 class PostForm(forms.ModelForm):
     class Meta:
         model = Post
-        exclude = ['bio', 'pub_date']
+        exclude = ['author', 'published_date']
         widgets = {
             'likes': forms.CheckboxSelectMultiple(),
-        }   
+        }  
+         
 
 class ProfileForm(forms.ModelForm):
     class Meta:
         model = Profile
-        fields ='__all__'     
+        exclude = ['author']
+        fields ='__all__'    
+
+class CommentForm(forms.ModelForm):
+    class Meta:
+        model = Comment
+        exclude = ['author', 'created_on', 'post']
+        fields ='__all__'
+
+    def __init__(self, *args, **kwargs):
+        super(CommentForm, self).__init__(*args, **kwargs)
+        self.fields['comment'].label = ""          
                     
