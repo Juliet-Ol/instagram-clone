@@ -11,6 +11,8 @@ urlpatterns=[
     path('accounts/register/', views.register, name='register'),
     path('profile', views.profile, name='profile'),
     path('edit-profile', views.editProfile, name='edit-profile'),
+    path('post', views.post, name='new-post'),
+    # path('edit-comment', views.editComment, name='edit-comment'),
 ]
 if settings.DEBUG:
     urlpatterns+= static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)

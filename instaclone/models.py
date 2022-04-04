@@ -2,11 +2,14 @@
 # from tkinter import image_names
 import datetime as dt
 # from email.mime import image
-
+from django.conf import settings
 from cloudinary.models import CloudinaryField
 from django.contrib.auth.models import User
 from django.db import models
 from django.utils import timezone
+
+
+
 
 # from instaclone.forms import PostForm
 
@@ -17,9 +20,12 @@ class Profile(models.Model):
     name =models.CharField(max_length=50, blank=True)
     bio = models.TextField(null=True)
 
+    def save_profile(self):
+        self.save()
+
 
     def __str__(self):
-        return self.user
+        return self.use
 
 
 class Image(models.Model):
@@ -34,24 +40,27 @@ class Image(models.Model):
     class Meta:
         ordering =['-likes']
 
-# class Post (models.Model):
-#     name = models.CharField(max_length=30)
+       
 
-#     def __str__(self):
-#         return self.name          
-
-class Comment(models.Model):  
-    comment = models.TextField()
-    # post = models.ForeignKey(Post,on_delete=models.CASCADE, related_name='comments')
-    
+class Comment(models.Model):
+    # post = models.ForeignKey(Post,on_delete=models.CASCADE,related_name='comments')
+    name = models.CharField(max_length=80, default=True)
+    comment = models.TextField(default=True)
+    # email = models.EmailField()
+    # body = models.TextField()
     created_on = models.DateTimeField(auto_now_add=True)
-    user = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='comments')
+    active = models.BooleanField(default=False)
 
-    def __str__(self):
-        return f'{self.user} Post'
+    def __str__(self) -> str:
+        return f'{self.user.username}Post'
 
     class Meta:
-        ordering = ['-created_on']    
+        ordering = ['created_on']
+
+    def __str__(self):
+        return 'Comment {} by {}'.format(self.body, self.name)  
+
+
 
 class Author(models.Model):
     name = models.CharField(max_length=30)
@@ -64,8 +73,6 @@ class Title(models.Model):
 
     def __str__(self):
         return self.name  
-
-
 
 
 
