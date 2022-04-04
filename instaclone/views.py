@@ -1,7 +1,7 @@
 from django.shortcuts import redirect, render
 from django.http import HttpResponse
-from .models import Image, Profile
-from .forms import ImageForm, ProfileForm
+from .models import Image, Profile, Comment, Post
+from .forms import CommentForm, ImageForm, ProfileForm, PostForm
 from django.contrib import messages
 from django.contrib.auth.forms import UserCreationForm
 import datetime as dt
@@ -12,8 +12,8 @@ import datetime as dt
 def index(request): 
     image = Image.objects.all() 
     ctx = {'image':image}
-    
-    return render(request,'instaclone/index.html', ctx)
+    posts = Post.display()
+    return render(request,'instaclone/index.html', {"posts":posts, "ctx":ctx})
 
 def loadImage(request):
     if request.method == "POST":
@@ -61,7 +61,7 @@ def profile(request):
         form = ProfileForm(request.POST, request.FILES)
         # Profile.objects.filter(id__gt=1)
         
-        profile=Profile.objects.get(author= request.user.id)
+        # profile=Profile.objects.get(author= request.user.id)
        
         if form.is_valid():
             profile.avatar=form.cleaned_data['avatar']   
@@ -70,6 +70,8 @@ def profile(request):
             profile.author=request.user            
             
             profile.save()
+
+            profile=Profile.objects.get(author= request.user.id)
             messages.success(request, 'Profile has been updated')
 
             return redirect ('/profile')
@@ -77,9 +79,62 @@ def profile(request):
             return render(request, 'profile/edit.html', {'form': form})
 
     else:
-        profile=Profile.objects.get(author= request.user.id)
+        profile=Profile.objects.get(author= request.user)
 
-        return render(request, 'profile/show.html', {'form': form, 'profile':profile})        
+        return render(request, 'profile/show.html', {'form': form, 'profile':profile})    
+
+
+
+def editComment(request):
+    form = CommentForm(initial={'name':request.user.username, 'comment':'test'})
+
+   
+    return render(request, 'post/comment.html', {'form': form})      
+
+
+def comment(request):
+    form = CommentForm
+
+    if request.method == 'POST':
+        form = CommentForm(request.POST, request.FILES)
+       
+        
+        comment=Comment.objects.get(author= request.user.id)
+       
+        if form.is_valid():
+            comment = CommentForm.save(commit=False)
+                     
+            
+            profile.save()
+            messages.success(request, 'Comment has been added')
+
+            return redirect ('/comment')
+        else:
+            return render(request, 'post/comment.html', {'form': form})
+
+    else:
+        comment=Comment.objects.get(author= request.user.id)
+
+        return render(request, 'profile/show.html', {'form': form, 'comment':comment})     
+
+
+
+def post(request):
+    form = PostForm
+    current_user = request.user
+    if request.method == 'POST':
+        form = PostForm(request.POST, request.FILES)
+        
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Posted')
+
+            return redirect ('index')
+        else:
+            return render(request, 'post/new_post.html', {'form': form})
+
+    else:
+        return render(request, 'post/new_post.html', {'form': form})                          
 
 
 
