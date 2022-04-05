@@ -60,16 +60,16 @@ def profile(request):
 
     if request.method == 'POST':
         form = ProfileForm(request.POST, request.FILES)
-        # Profile.objects.filter(id__gt=1)
+        Profile.objects.filter(id__gt=1)
         
-        # profile=Profile.objects.get(author= request.user.id)
+        profile=Profile.objects.get(author= request.user.id)
        
         if form.is_valid():
-            # avatar=form.cleaned_data['avatar']   
-            # name=form.cleaned_data['name']  
-            # bio=form.cleaned_data['bio'] 
-            # author=request.user            
-            # profile=Profile(avatar,name,bio,au)
+            avatar=form.cleaned_data['avatar']   
+            name=form.cleaned_data['name']  
+            bio=form.cleaned_data['bio'] 
+            author=request.user            
+            profile=Profile(avatar,name,bio,author)
             form.save()
 
             profile=Profile.objects.get(author= request.user.id)

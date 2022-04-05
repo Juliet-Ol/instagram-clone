@@ -1,14 +1,15 @@
 {% extends 'instaclone/base.html' %}
+{% load crispy_forms_tags %}
 {% load static %}
 
 {% block content%}
 <div class="row"  style="margin-left: auto; margin-right: auto;" align="center">
     {% for post in posts %}
-    <div class="col-md-6"> 
+    <div class="col-md-6 mx-auto"> 
 
           
         <h5 class="card-title"> {{post.title}}</h5>
-          <img src="{% static post.picture %}" style='width: 250px;border-radius: 5px;;'class="card-img-top" alt="..." align="center"> <br><br>
+          <img src="{% static post.picture %}" style='width: 400px;border-radius: 5px;;'class="card-img-top" alt="..." align="center"> <br><br>
     </div>      
   
           <div> 
@@ -26,9 +27,10 @@
             {% endfor %}
           </div>
 
-          <div>
-            <form method="POST" action="comment">
-              {{ comment_form.as_p }}
+          <div class="container">
+            <form method="POST"  action="comment"  class="form-group">
+             
+              {{ comment_form.as_p}} 
               <input type="hidden" name="post_id" value="{{ post.id }}">
               <button>Submit</button>
             </form>

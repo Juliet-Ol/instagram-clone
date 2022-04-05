@@ -22,12 +22,15 @@ class Profile(models.Model):
     name =models.CharField(max_length=50, blank=True)
     bio = models.TextField(null=True)
 
+    
+    def __str__(self):
+        return self.use
+
     def save_profile(self):
         self.save()
 
-
-    def __str__(self):
-        return self.use
+    def save_profile(self):
+        self.delete()        
 
 
 class Image(models.Model):
@@ -42,10 +45,17 @@ class Image(models.Model):
     class Meta:
         ordering =['-likes']
 
-       
+    def __str__(self):
+        return self.image_name       
+
+    def save_image(self):
+        self.save()
+
+    def delete_image(self):
+        self.delete()    
 
 
-
+    
 class Author(models.Model):
     name = models.CharField(max_length=30)
 
@@ -79,6 +89,12 @@ class Post (models.Model):
     def __str__(self):
         return self.title
 
+    def save_post(self):
+        self.save()
+
+    def delete_post(self):
+        self.delete()       
+
 class Comment(models.Model):
     post = models.ForeignKey(Post, null=True, on_delete=models.CASCADE,related_name='comments')
     author = models.ForeignKey(User, on_delete = models.CASCADE, null=True)
@@ -92,7 +108,11 @@ class Comment(models.Model):
         return 'Comment: {} by {}'.format(self.comment, self.author.username)  
 
 
-    
+    def save_comment(self):
+        self.save()
+
+    def delete_comment(self):
+        self.delete() 
 
 
 
