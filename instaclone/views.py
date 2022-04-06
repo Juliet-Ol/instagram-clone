@@ -124,7 +124,7 @@ def post(request):
             post.title = form.cleaned_data['title']
             post.post = form.cleaned_data['post']
             post.author = current_user
-            post.picture = form.cleaned_data['picture']
+            post.picture = form.cleaned_data['image']
             post.save()
             messages.success(request, 'Posted')
 

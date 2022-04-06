@@ -76,7 +76,7 @@ class Post (models.Model):
     post = models.CharField(max_length=100)
     author = models.ForeignKey(User, on_delete = models.CASCADE)
     published_date = models.DateTimeField(auto_now_add=True)
-    picture = models.ImageField(upload_to='image', null=True)
+    picture = CloudinaryField('image')
 
     class Meta:
         ordering = ['-published_date']  

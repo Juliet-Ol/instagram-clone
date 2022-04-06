@@ -5,96 +5,57 @@ from .models import Image, Profile, Post, Comment
 # Set up method 
 class ImageTestClass(TestCase):
     def setUp(self):
-        self.breakfast=Image(image='image', image_name='breakfast', image_caption='Important',)
+        self.image=Image(image_name='breakfast')
 
     def test_instance(self):
-        self.assertTrue(isinstance(self.breakfast,Image))
+        self.assertTrue(isinstance(self.image,Image))
 
 #Testing Save Method
 
     def test_save_method(self):
         self.breakfast.save_image()
         images = Image.objects.all()
-        self.assertTrue(len(images)>1)
+        self.assertTrue(len(images)>0)
 
-#Tesing Delete Method
-    def test_delete_method(self):
-        self.breakfast.delete_image()
-        images = Image.objects.all()
-        self.assertTrue(len(images)>1)   
+ 
 
 
 # Set up method 
 class ProfileTestClass(TestCase):
     def setUp(self):
-        self.juliet=Profile(avatar='avatar', author='juliet', name='juliet', bio='juliet')
+        self.profile=Profile(name='juliet')
 
     def test_instance(self):
-        self.assertTrue(isinstance(self.juliet, Profile))
-
-
-#Testing Save Method
-
-    def test_save_method(self):
-        self.juliet.save_profile()
-        profiles = Profile.objects.all()
-        self.assertTrue(len(profiles)>1)
-
-#Tesing Delete Method
-    def test_delete_method(self):
-        self.juliet.delete_profile()
-        profiles = Profile.objects.all()
-        self.assertTrue(len(profiles)>1) 
+        self.assertTrue(isinstance(self.profile, Profile))
 
 
 
-# Set up method        
+
+
+# # Set up method        
 
 
 class PostTestClass(TestCase):
     def setUp(self):
-        self.breakfast=Post(title='breakfast', post='hey', author='juliet', published_date='Aprill4', picture='picture')
+        self.breakfast=Post(title='breakfast', post='hey', published_date='Aprill4', picture='picture')
 
     def test_instance(self):
         self.assertTrue(isinstance(self.breakfast, Post))  
 
 
-#Testing Save Method
 
-    def test_save_method(self):
-        self.breakfast.save_post()
-        posts = Post.objects.all()
-        self.assertTrue(len(posts)>1)
-
-#Tesing Delete Method
-    def test_delete_method(self):
-        self.breakfast.delete_post()
-        posts = Post.objects.all()
-        self.assertTrue(len(posts)>1)
-
-# Set up method        
+# # Set up method        
 
 
 class CommentTestClass(TestCase):
     def setUp(self):
-        self.juliet=Comment(post='', author='juliet', comment='good', created_on='Aprill4')
+        self.good=Comment(comment='good', created_on='Aprill4')
 
     def test_instance(self):
-        self.assertTrue(isinstance(self.juliet, Comment))  
+        self.assertTrue(isinstance(self.good, Comment))  
 
 
-    #Testing Save Method
-
-    def test_save_method(self):
-        self.juliet.save_comment()
-        comments = Comment.objects.all()
-        self.assertTrue(len(comments)>1)
-
-#Tesing Delete Method
-    def test_delete_method(self):
-        self.juliet.delete_comment()
-        comments = Comment.objects.all()
-        self.assertTrue(len(comments)>1)            
+        
 
 
 

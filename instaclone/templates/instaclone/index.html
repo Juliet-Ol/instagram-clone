@@ -8,7 +8,7 @@
 
           
         <h5 class="card-title"> {{post.title}}</h5>
-          <img src="{% static post.picture %}" style='width: 400px;border-radius: 5px;;'class="card-img-top" alt="..." align="center"> <br><br>
+          <img src="{{ post.picture.url }}" style='width: 400px;border-radius: 5px;;'class="card-img-top" alt="..." align="center"> <br><br>
     </div>      
   
           <div> 
@@ -35,7 +35,7 @@
             </form>
           </div>
 
-          {% endfor %}
+    {% endfor %}
 
   </div>
 
