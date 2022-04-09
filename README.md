@@ -39,7 +39,7 @@ Guide to install Instagram Clone
 
 
 
-## Start the flask server
+## Start the django server
 
 (Virtual)$ python3 manage.py runserver
 
